@@ -27,8 +27,7 @@ public class PlayerController : MonoBehaviour
          Animator Directions = { 
         0 : Downwards,
         1 : Leftside,
-        2 : Upwards,
-        3 : Rightside
+        2 : Upwards        
          */
 
         float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
@@ -42,23 +41,23 @@ public class PlayerController : MonoBehaviour
         // Moving Upwards
         if(moveY > 0)
         {
-            animator.SetInteger("isMoving", 2);
+            animator.SetInteger("isWalking", 2);
             animator.SetInteger("isIdle", -1);
         }
 
         // Moving Downwards
         else if (moveY < 0)
         {
-            animator.SetInteger("isMoving", 0);
+            animator.SetInteger("isWalking", 0);
             animator.SetInteger("isIdle", -1);
         }
 
         // Idle 
         else
         {
-            animator.SetInteger("isMoving", -1);
-            if (animator.GetInteger("isMoving") != -1)
-                animator.SetInteger("isIdle", animator.GetInteger("isMoving"));
+            animator.SetInteger("isWalking", -1);
+            if (animator.GetInteger("isWalking") != -1)
+                animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
             else
                 animator.SetInteger("isIdle", 0);
         }
@@ -67,7 +66,7 @@ public class PlayerController : MonoBehaviour
         if (moveX > 0)
         {
             rb.SetRotation(0f);
-            animator.SetInteger("isMoving", 3);
+            animator.SetInteger("isWalking", 3);
             animator.SetInteger("isIdle", -1);
 
 
@@ -76,16 +75,16 @@ public class PlayerController : MonoBehaviour
         // Moving Leftside
         else if (moveX < 0)
         {
-            animator.SetInteger("isMoving", 1);
+            animator.SetInteger("isWalking", 1);
             animator.SetInteger("isIdle", -1);
         }
 
         // Idle
         else
         {
-            animator.SetInteger("isMoving", -1);
-            if(animator.GetInteger("isMoving") != -1)
-                animator.SetInteger("isIdle", animator.GetInteger("isMoving"));
+            animator.SetInteger("isWalking", -1);
+            if(animator.GetInteger("isWalking") != -1)
+                animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
             else
                 animator.SetInteger("isIdle", 0);
         }
