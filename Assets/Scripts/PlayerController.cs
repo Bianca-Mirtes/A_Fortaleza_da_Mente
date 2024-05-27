@@ -6,10 +6,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour   
 {
     //PRIVATE
-    [SerializeField] private Animator animator; // Character Animator
+    private Animator animator; // Character Animator
     private float speed; // Character Speed
     private Vector2 movement; // Character Movement Direction
     private Rigidbody2D rb;
+    private Transform transform;
 
 
 
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        animator =gameObject.GetComponent<Animator>();
+        transform = gameObject.GetComponent<Transform>();
     }
 
     void UpdateMovement()
@@ -33,40 +36,17 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
         float moveY = Input.GetAxisRaw("Vertical"); // Y input movement
         movement = new Vector2(moveX,  moveY).normalized * Time.deltaTime * speed;
+        //transform.position = movement;
 
-        rb.SetRotation(0f);
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
         // Animations prioritize the X movement
-
-        // Moving Upwards
-        if(moveY > 0)
-        {
-            animator.SetInteger("isWalking", 2);
-            animator.SetInteger("isIdle", -1);
-        }
-
-        // Moving Downwards
-        else if (moveY < 0)
-        {
-            animator.SetInteger("isWalking", 0);
-            animator.SetInteger("isIdle", -1);
-        }
-
-        // Idle 
-        else
-        {
-            animator.SetInteger("isWalking", -1);
-            if (animator.GetInteger("isWalking") != -1)
-                animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
-            else
-                animator.SetInteger("isIdle", 0);
-        }
 
         // Moving Rightside
         if (moveX > 0)
         {
-            rb.SetRotation(0f);
-            animator.SetInteger("isWalking", 3);
+            transform.rotation = Quaternion.Euler(0f,180f,0f);
+            animator.SetInteger("isWalking", 1);
             animator.SetInteger("isIdle", -1);
 
 
@@ -79,15 +59,33 @@ public class PlayerController : MonoBehaviour
             animator.SetInteger("isIdle", -1);
         }
 
+        // Moving Upwards
+        else if (moveY > 0)
+        {
+            animator.SetInteger("isWalking", 2);
+            animator.SetInteger("isIdle", -1);
+        }
+
+        // Moving Downwards
+        else if (moveY < 0)
+        {
+            animator.SetInteger("isWalking", 0);
+            animator.SetInteger("isIdle", -1);
+        }       
+
         // Idle
         else
         {
             animator.SetInteger("isWalking", -1);
-            if(animator.GetInteger("isWalking") != -1)
+            if (animator.GetInteger("isWalking") != -1)
                 animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
             else
                 animator.SetInteger("isIdle", 0);
         }
+
+
+        
+
         
         
     }

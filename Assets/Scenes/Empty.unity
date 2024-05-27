@@ -131,49 +131,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[0]
-      value: 
-      objectReference: {fileID: 7400000, guid: d6d7acadade5874449bb83e945a22fd9, type: 2}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[1]
-      value: 
-      objectReference: {fileID: 7400000, guid: e5e37d1b766b4dc4eb0d868c05e598c1, type: 2}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[2]
-      value: 
-      objectReference: {fileID: 7400000, guid: c99297294263cd14aafc2e0896b2dc80, type: 2}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[3]
-      value: 
-      objectReference: {fileID: 7400000, guid: dbd6ded4cfd12054295ce8565e6ea3d7, type: 2}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[4]
-      value: 
-      objectReference: {fileID: 7400000, guid: 8e5cb7e6a8725264b9b61e033a83e441, type: 2}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[5]
-      value: 
-      objectReference: {fileID: 7400000, guid: 48d79d3eadcbf5e47bca143cbd2fb006, type: 2}
-    - target: {fileID: 222235093698091912, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
-      propertyPath: m_Animations.Array.data[6]
-      value: 
-      objectReference: {fileID: 7400000, guid: c826fc274fd80fd4ab31889e97473f06, type: 2}
     - target: {fileID: 8976816826737870324, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
       propertyPath: m_Name
       value: Anthony
       objectReference: {fileID: 0}
     - target: {fileID: 9196050251116090288, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.20108044
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9196050251116090288, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.047161467
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9196050251116090288, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -312,42 +280,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[0]
-      value: 
-      objectReference: {fileID: 7400000, guid: 24184861f2ed6b641994356040702c68, type: 2}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[1]
-      value: 
-      objectReference: {fileID: 7400000, guid: 55811845a050b1f439764d2af9ce4bc1, type: 2}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[2]
-      value: 
-      objectReference: {fileID: 7400000, guid: 92168dee2f7fc0747879103eac27342a, type: 2}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[3]
-      value: 
-      objectReference: {fileID: 7400000, guid: 4126d557018cc4a47826321f645d4ae7, type: 2}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[4]
-      value: 
-      objectReference: {fileID: 7400000, guid: 60c07cb5af93b604fbcb68c9c5b10c1d, type: 2}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[5]
-      value: 
-      objectReference: {fileID: 7400000, guid: e39147e5d1f77854caf59665903be310, type: 2}
-    - target: {fileID: 222235093698091912, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Animations.Array.data[6]
-      value: 
-      objectReference: {fileID: 7400000, guid: 5b71a3499070983458cc5e4cfd951bab, type: 2}
-    - target: {fileID: 382636235410523672, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 3550cf02b081e7d4a91c97d3a1e767e4, type: 2}
     - target: {fileID: 8976816826737870324, guid: 2f8d6badd1c764541a5731ace1de2d91, type: 3}
       propertyPath: m_Name
       value: Elizabeth
