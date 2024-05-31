@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6257975008779828823}
   - component: {fileID: 5473608476030653493}
   - component: {fileID: 382636235410523672}
-  - component: {fileID: 222235093698091912}
   - component: {fileID: 7591457203982913506}
   m_Layer: 0
   m_Name: Anthony
@@ -31,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,28 +135,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!111 &222235093698091912
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976816826737870324}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: d6d7acadade5874449bb83e945a22fd9, type: 2}
-  - {fileID: 7400000, guid: e5e37d1b766b4dc4eb0d868c05e598c1, type: 2}
-  - {fileID: 7400000, guid: c99297294263cd14aafc2e0896b2dc80, type: 2}
-  - {fileID: 7400000, guid: dbd6ded4cfd12054295ce8565e6ea3d7, type: 2}
-  - {fileID: 7400000, guid: 8e5cb7e6a8725264b9b61e033a83e441, type: 2}
-  - {fileID: 7400000, guid: 48d79d3eadcbf5e47bca143cbd2fb006, type: 2}
-  - {fileID: 7400000, guid: c826fc274fd80fd4ab31889e97473f06, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &7591457203982913506
 MonoBehaviour:
   m_ObjectHideFlags: 0

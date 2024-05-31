@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Transform transform;
 
-
-
     //PUBLIC
 
     // Start is called before the first frame update
@@ -45,7 +43,7 @@ public class PlayerController : MonoBehaviour
         // Moving Rightside
         if (moveX > 0)
         {
-            transform.rotation = Quaternion.Euler(0f,180f,0f);
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             animator.SetInteger("isWalking", 1);
             animator.SetInteger("isIdle", -1);
 
@@ -71,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetInteger("isWalking", 0);
             animator.SetInteger("isIdle", -1);
-        }       
+        }
 
         // Idle
         else
@@ -81,13 +79,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
             else
                 animator.SetInteger("isIdle", 0);
-        }
-
-
-        
-
-        
-        
+        }   
     }
 
     // Update is called once per frame
