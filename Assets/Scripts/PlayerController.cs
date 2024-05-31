@@ -3,16 +3,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Skill
+{
+    //PUBLIC
+    public int id;
+    public float cooldown;
+    public string name;
+    public string description;
+
+    public void Activate()
+    {
+        if(cooldown == 0f)
+        {
+            ActivateSkill();
+        }
+    }
+
+    private void ActivateSkill()
+    {
+
+    }
+}
+
+public class PlayerSkills
+{
+    //PUBLIC    
+
+
+    //PRIVATE
+    private List<Skill> unlockedSkills;
+
+    public PlayerSkills() { 
+        unlockedSkills = new List<Skill>();
+    }
+
+    public void SetSkills(List<Skill> type){
+        unlockedSkills = type;
+    }
+
+    public void UnlockSkill(Skill type)
+    {
+        unlockedSkills.Add(type);
+    }    
+
+    public bool IsSkillUnlocked(Skill type)
+    {
+        return unlockedSkills.Contains(type);
+    }
+
+    public List<Skill> GetSkillTypes()
+    {
+        return unlockedSkills;
+    }
+}
+
 public class PlayerController : MonoBehaviour   
 {
     //PRIVATE
     private Animator animator; // Character Animator
-    private float speed; // Character Speed
+    private float speed = 3f; // Character Speed
     private Vector2 movement; // Character Movement Direction
-    private Rigidbody2D rb;
-    private Transform transform;
+    private Rigidbody2D rb; // Character Rigidbody2D
+    private Transform transform; // Character Transform
+
+
 
     //PUBLIC
+    public PlayerSkills playerSkills { get; private set; } // Character Skills
+    
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +78,8 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator =gameObject.GetComponent<Animator>();
         transform = gameObject.GetComponent<Transform>();
+
+        playerSkills = new PlayerSkills();
     }
 
     void UpdateMovement()
@@ -33,8 +93,8 @@ public class PlayerController : MonoBehaviour
 
         float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
         float moveY = Input.GetAxisRaw("Vertical"); // Y input movement
-        movement = new Vector2(moveX,  moveY).normalized * Time.deltaTime * speed;
-        //transform.position = movement;
+        movement = new Vector2(moveX,  moveY).normalized *  speed;
+        rb.velocity = movement;
 
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
@@ -83,7 +143,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         UpdateMovement();
     }
