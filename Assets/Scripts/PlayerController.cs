@@ -8,12 +8,21 @@ public class Skill
     //PUBLIC
     public int id;
     public float cooldown;
+    public float time;
     public string name;
     public string description;
 
+    public Skill(int id, float cool, string name, string desc)
+    {
+        this.id = id;
+        cooldown = cool;
+        this.name = name;
+        description = desc;
+    }   
+
     public void Activate()
     {
-        if(cooldown == 0f)
+        if(time == 0f)
         {
             ActivateSkill();
         }
@@ -98,7 +107,7 @@ public class PlayerController : MonoBehaviour
         movement = new Vector2(moveX,  moveY).normalized *  speed;
         rb.velocity = movement;
 
-        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        
 
         // Animations prioritize the X movement
 
@@ -115,6 +124,7 @@ public class PlayerController : MonoBehaviour
         // Moving Leftside
         else if (moveX < 0)
         {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             animator.SetInteger("isWalking", 1);
             animator.SetInteger("isIdle", -1);
         }
@@ -122,6 +132,7 @@ public class PlayerController : MonoBehaviour
         // Moving Upwards
         else if (moveY > 0)
         {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             animator.SetInteger("isWalking", 2);
             animator.SetInteger("isIdle", -1);
         }
@@ -129,6 +140,7 @@ public class PlayerController : MonoBehaviour
         // Moving Downwards
         else if (moveY < 0)
         {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             animator.SetInteger("isWalking", 0);
             animator.SetInteger("isIdle", -1);
         }       
@@ -140,7 +152,10 @@ public class PlayerController : MonoBehaviour
             if (animator.GetInteger("isWalking") != -1)
                 animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
             else
+            {
                 animator.SetInteger("isIdle", 0);
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
         }
 
 
