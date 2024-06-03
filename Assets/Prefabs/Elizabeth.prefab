@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6257975008779828823}
   - component: {fileID: 5473608476030653493}
   - component: {fileID: 382636235410523672}
-  - component: {fileID: 222235093698091912}
   - component: {fileID: 1629178667855868688}
   m_Layer: 0
   m_Name: Elizabeth
@@ -31,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,28 +135,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!111 &222235093698091912
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976816826737870324}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 24184861f2ed6b641994356040702c68, type: 2}
-  - {fileID: 7400000, guid: 55811845a050b1f439764d2af9ce4bc1, type: 2}
-  - {fileID: 7400000, guid: 92168dee2f7fc0747879103eac27342a, type: 2}
-  - {fileID: 7400000, guid: 4126d557018cc4a47826321f645d4ae7, type: 2}
-  - {fileID: 7400000, guid: 60c07cb5af93b604fbcb68c9c5b10c1d, type: 2}
-  - {fileID: 7400000, guid: e39147e5d1f77854caf59665903be310, type: 2}
-  - {fileID: 7400000, guid: 5b71a3499070983458cc5e4cfd951bab, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1629178667855868688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,4 +147,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c323e77119860544390aebae8190d167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 382636235410523672}

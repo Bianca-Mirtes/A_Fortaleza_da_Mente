@@ -77,8 +77,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-
-
     //PUBLIC
     public PlayerSkills playerSkills { get; private set; } // Character Skills
     
@@ -114,7 +112,7 @@ public class PlayerController : MonoBehaviour
         // Moving Rightside
         if (moveX > 0)
         {
-            transform.rotation = Quaternion.Euler(0f,180f,0f);
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             animator.SetInteger("isWalking", 1);
             animator.SetInteger("isIdle", -1);
 
@@ -143,7 +141,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             animator.SetInteger("isWalking", 0);
             animator.SetInteger("isIdle", -1);
-        }       
+        }
 
         // Idle
         else
