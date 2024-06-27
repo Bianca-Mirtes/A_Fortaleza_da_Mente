@@ -28,7 +28,7 @@ public class Skill
         }
     }
 
-    private void ActivateSkill()
+    protected void ActivateSkill()
     {
 
     }
