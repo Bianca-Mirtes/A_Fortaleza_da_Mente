@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb; // Character Rigidbody2D
     private Transform transform; // Character Transform
 
+    private int aux = -1;
+
 
 
     //PUBLIC
@@ -103,7 +105,7 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
         float moveY = Input.GetAxisRaw("Vertical"); // Y input movement
         movement = new Vector2(moveX,  moveY).normalized *  speed;
-        rb.velocity = movement;
+        rb.velocity = movement;        
 
         
 
@@ -112,8 +114,8 @@ public class PlayerController : MonoBehaviour
         // Moving Rightside
         if (moveX > 0)
         {
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            animator.SetInteger("isWalking", 1);
+            
+            animator.SetInteger("isWalking", 3);
             animator.SetInteger("isIdle", -1);
 
 
@@ -121,24 +123,21 @@ public class PlayerController : MonoBehaviour
 
         // Moving Leftside
         else if (moveX < 0)
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        {            
             animator.SetInteger("isWalking", 1);
             animator.SetInteger("isIdle", -1);
         }
 
         // Moving Upwards
         else if (moveY > 0)
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        {            
             animator.SetInteger("isWalking", 2);
             animator.SetInteger("isIdle", -1);
         }
 
         // Moving Downwards
         else if (moveY < 0)
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        {            
             animator.SetInteger("isWalking", 0);
             animator.SetInteger("isIdle", -1);
         }
@@ -146,14 +145,16 @@ public class PlayerController : MonoBehaviour
         // Idle
         else
         {
-            animator.SetInteger("isWalking", -1);
+            /*animator.SetInteger("isIdle", aux);
             if (animator.GetInteger("isWalking") != -1)
-                animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
-            else
             {
-                animator.SetInteger("isIdle", 0);
-                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            }
+                aux = animator.GetInteger("isWalking");
+            }*/
+            animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
+            animator.SetInteger("isWalking", -1);
+            
+
+
         }
 
 

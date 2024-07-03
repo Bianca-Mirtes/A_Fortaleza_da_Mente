@@ -159,6 +159,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: elizabeth_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 389f1cd6bc99fdb45858a8a48790ccd3
+      internalID: -2116591651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -173,6 +194,7 @@ TextureImporter:
       elizabeth_0: 2086479509
       elizabeth_1: 1384205796
       elizabeth_2: 260731318
+      elizabeth_3: -2116591651
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
