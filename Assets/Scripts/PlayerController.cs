@@ -144,13 +144,12 @@ public class PlayerController : MonoBehaviour
 
         // Idle
         else
-        {
-            /*animator.SetInteger("isIdle", aux);
+        {            
             if (animator.GetInteger("isWalking") != -1)
             {
                 aux = animator.GetInteger("isWalking");
-            }*/
-            animator.SetInteger("isIdle", animator.GetInteger("isWalking"));
+            }
+            animator.SetInteger("isIdle", aux);
             animator.SetInteger("isWalking", -1);
             
 
