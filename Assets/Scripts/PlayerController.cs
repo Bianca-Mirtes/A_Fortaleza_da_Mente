@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour
          Animator Directions = { 
         0 : Downwards,
         1 : Leftside,
-        2 : Upwards        
+        2 : Upwards, 
+        3 : Rightside
          */
 
         float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
