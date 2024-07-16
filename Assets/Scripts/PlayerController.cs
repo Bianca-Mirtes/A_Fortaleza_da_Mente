@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
         transform = gameObject.GetComponent<Transform>();
 
         playerSkills = new PlayerSkills();
+         
     }
 
     void UpdateMovement()
