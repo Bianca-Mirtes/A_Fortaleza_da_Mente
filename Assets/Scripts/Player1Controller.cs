@@ -66,7 +66,7 @@ public class PlayerSkills
     }
 }
 
-public class PlayerController : MonoBehaviour   
+public class Player1Controller : MonoBehaviour   
 {
     //PRIVATE
     private Animator animator; // Character Animator
@@ -104,8 +104,8 @@ public class PlayerController : MonoBehaviour
         3 : Rightside
          */
 
-        float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
-        float moveY = Input.GetAxisRaw("Vertical"); // Y input movement
+        float moveX = Input.GetAxisRaw("HorizontalP1"); // X input movement
+        float moveY = Input.GetAxisRaw("VerticalP1"); // Y input movement
         movement = new Vector2(moveX,  moveY).normalized *  speed;
         rb.velocity = movement;        
 
@@ -153,16 +153,7 @@ public class PlayerController : MonoBehaviour
             }
             animator.SetInteger("isIdle", aux);
             animator.SetInteger("isWalking", -1);
-            
-
-
-        }
-
-
-        
-
-        
-        
+        }      
     }
 
     // Update is called once per frame
