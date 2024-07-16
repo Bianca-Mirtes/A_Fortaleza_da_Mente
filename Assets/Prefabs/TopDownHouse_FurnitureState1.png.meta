@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -86,6 +86,32 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -228,7 +254,7 @@ TextureImporter:
         serializedVersion: 2
         x: 128
         y: 256
-        width: 31
+        width: 16
         height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1089,7 +1115,7 @@ TextureImporter:
         serializedVersion: 2
         x: 96
         y: 53
-        width: 80
+        width: 32
         height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1155,7 +1181,7 @@ TextureImporter:
         width: 48
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1163,6 +1189,69 @@ TextureImporter:
       bones: []
       spriteID: 93eb396bcb600894f8a7df0614769308
       internalID: 1233395395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TopDownHouse_FurnitureState1_51
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 256
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e6ee68a433d5364fac3e6e9f1f72a6b
+      internalID: -1621880519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TopDownHouse_FurnitureState1_52
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 53
+        width: 16
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fae52738e75a0540b6ab043d89eeca7
+      internalID: -1705482097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TopDownHouse_FurnitureState1_53
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 53
+        width: 32
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95044b6c14b94624c8f7afd8cd9e326e
+      internalID: -2053911484
       vertices: []
       indices: 
       edges: []
@@ -1225,6 +1314,9 @@ TextureImporter:
       TopDownHouse_FurnitureState1_49: 775556238
       TopDownHouse_FurnitureState1_5: -669711145
       TopDownHouse_FurnitureState1_50: 1233395395
+      TopDownHouse_FurnitureState1_51: -1621880519
+      TopDownHouse_FurnitureState1_52: -1705482097
+      TopDownHouse_FurnitureState1_53: -2053911484
       TopDownHouse_FurnitureState1_6: -2032987928
       TopDownHouse_FurnitureState1_7: -684408487
       TopDownHouse_FurnitureState1_8: -237283083
