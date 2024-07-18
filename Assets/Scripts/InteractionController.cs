@@ -10,7 +10,6 @@ public class InteractionController : MonoBehaviour
     public Sprite close;
 
     private bool isOpen = false;
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -25,7 +24,6 @@ public class InteractionController : MonoBehaviour
                 GetComponent<SpriteRenderer>().sprite = close;
                 isOpen = false;
             }
-
         }
     }
 
@@ -43,7 +41,6 @@ public class InteractionController : MonoBehaviour
                 GetComponent<SpriteRenderer>().sprite = close;
                 isOpen = false;
             }
-
         }
     }
 }
