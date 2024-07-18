@@ -11,7 +11,7 @@ public class DoorController : MonoBehaviour
     public GameObject wall;
     public GameObject edgeDoor;
 
-    private bool isOpen = false;
+    private bool isOpen = true;
     // Start is called before the first frame update
     void Start()
     {

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6257975008779828823}
   - component: {fileID: 5473608476030653493}
   - component: {fileID: 382636235410523672}
-  - component: {fileID: 7591457203982913506}
   - component: {fileID: 6120575439016572263}
   m_Layer: 0
   m_Name: Anthony
@@ -136,18 +135,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7591457203982913506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976816826737870324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c323e77119860544390aebae8190d167, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!70 &6120575439016572263
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
