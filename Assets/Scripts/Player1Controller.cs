@@ -11,7 +11,6 @@ public class Skill
     public float time;
     public string name;
     public string description;
-
     public Skill(int id, float cool, string name, string desc)
     {
         this.id = id;
@@ -74,10 +73,17 @@ public class Player1Controller : MonoBehaviour
     private Vector2 movement; // Character Movement Direction
     private Rigidbody2D rb; // Character Rigidbody2D
     private Transform transform; // Character Transform
-
+    private string email { get; set; }
+    private string password { get; set; }
     private int aux = -1;
 
 
+    NetworkController nm;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        nm = NetworkController.Instance;
+    }
 
     //PUBLIC
     public PlayerSkills playerSkills { get; private set; } // Character Skills
@@ -104,8 +110,8 @@ public class Player1Controller : MonoBehaviour
         3 : Rightside
          */
 
-        float moveX = Input.GetAxisRaw("HorizontalP1"); // X input movement
-        float moveY = Input.GetAxisRaw("VerticalP1"); // Y input movement
+        float moveX = Input.GetAxisRaw("Horizontal"); // X input movement
+        float moveY = Input.GetAxisRaw("Vertical"); // Y input movement
         movement = new Vector2(moveX,  moveY).normalized *  speed;
         rb.velocity = movement;        
 

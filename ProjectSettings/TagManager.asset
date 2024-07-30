@@ -6,6 +6,7 @@ TagManager:
   tags:
   - skill
   - Feedback
+  - Inventario
   layers:
   - Default
   - TransparentFX
