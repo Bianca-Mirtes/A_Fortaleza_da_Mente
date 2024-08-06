@@ -6323,7 +6323,7 @@ GameObject:
   - component: {fileID: 365380200}
   m_Layer: 0
   m_Name: Inventario
-  m_TagString: Inventario
+  m_TagString: InventarioA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9489,6 +9489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c994f1fd4c4a5414198644be50a75a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  email: {fileID: 0}
+  password: {fileID: 0}
 --- !u!1 &610972766
 GameObject:
   m_ObjectHideFlags: 0
@@ -16599,7 +16601,7 @@ GameObject:
   - component: {fileID: 1295395720}
   m_Layer: 0
   m_Name: Inventario
-  m_TagString: Inventario
+  m_TagString: InventarioE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32508,6 +32510,7 @@ MonoBehaviour:
   AnthonyPrefab: {fileID: 8976816826737870324, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
   positionP2: {fileID: 8532638440012114362, guid: 0d725a6f1f3cf794785c8b947cd0ec46, type: 3}
   serverAddress: ws://localhost:9000
+  feedback: {fileID: 0}
 --- !u!4 &1858042693
 Transform:
   m_ObjectHideFlags: 0

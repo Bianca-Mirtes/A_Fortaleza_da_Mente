@@ -10,11 +10,11 @@ public class ServerResponse
     public string type { get; set; }
 
     // Parâmetros da resposta (pode ser qualquer coisa armazenada em um dicionário)
-    public Dictionary<string, string> payload { get; set; }
+    public Dictionary<string, string> parameters { get; set; }
 
     ServerResponse()
     {
-        payload = new Dictionary<string, string>();
+        parameters = new Dictionary<string, string>();
     }
 
     // Tostring mostrando tudo
@@ -22,7 +22,7 @@ public class ServerResponse
     {
         string str = "";
         str += "Type: " + type + "\n";
-        str += "Payload: " + payload + "\n";
+        //str += "Payload: " + payload + "\n";
         return str;
     }
 }

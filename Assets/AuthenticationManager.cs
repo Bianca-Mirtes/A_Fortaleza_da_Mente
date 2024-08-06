@@ -10,9 +10,9 @@ using UnityEngine.SceneManagement;
 
 public class AuthenticationManager : MonoBehaviour
 {
-    public static AuthenticationManager Instance { get; private set; }
-    public TMP_InputField email;
-    public TMP_InputField password;
+    public static AuthenticationManager Instance;
+    private TMP_InputField email;
+    private TMP_InputField password;
     private void Awake()
     {
         if(Instance == null)
@@ -28,6 +28,8 @@ public class AuthenticationManager : MonoBehaviour
     // To make the user's register
     public void Register()
     {
+        email = GameObject.FindGameObjectWithTag("InputEmail").GetComponent<TMP_InputField>();
+        password = GameObject.FindGameObjectWithTag("InputPassword").GetComponent<TMP_InputField>();
         FindObjectOfType<NetworkController>().SendRegister(email.textComponent.text, password.textComponent.text);
     }
 

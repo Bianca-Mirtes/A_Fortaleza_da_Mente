@@ -110,14 +110,23 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
-            if(!isOpen)
+            GameObject inventario;
+            if (gameObject.name == "Elizabeth")
             {
-                FindObjectOfType<GameController>().ShowInventario();
+                inventario = GameObject.FindGameObjectWithTag("InventarioE");
+            }
+            else
+            {
+                inventario = GameObject.FindGameObjectWithTag("InventarioA");
+            }
+            if (!isOpen)
+            {
+                FindObjectOfType<GameController>().ShowInventario(inventario);
                 isOpen = !isOpen;
             }
             else
             {
-                FindObjectOfType<GameController>().DisaspperInventario();
+                FindObjectOfType<GameController>().DisaspperInventario(inventario);
                 isOpen = !isOpen;
             }
         }

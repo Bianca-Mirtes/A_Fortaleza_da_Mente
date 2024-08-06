@@ -27,14 +27,14 @@ public class NetworkController : MonoBehaviour
     // Server Adress
     public string serverAddress = "ws://192.168.0.10:9000";
 
-    public TextMeshProUGUI feedback;
+    private TextMeshProUGUI feedback;
 
     // WebSocket for communication with the server
     private WebSocket ws;
 
     private string playerID;
-    private List<String> playersInLobby;
-    private List<String> playersInGame;
+    private List<string> playersInLobby;
+    private List<string> playersInGame;
 
     private static NetworkController instance;
 
@@ -86,6 +86,7 @@ public class NetworkController : MonoBehaviour
 
     public void SendRegister(string email, string password)
     {
+        feedback = GameObject.FindGameObjectWithTag("Feedback").GetComponent<TextMeshProUGUI>();
         Action action = new Action
         {
             type = "Register",
@@ -112,8 +113,8 @@ public class NetworkController : MonoBehaviour
                 case "Welcome":
                     // Case "Wellcome", the server sended the player's id that would be used to identify the player inside the game
                     Debug.Log("Welcome");
-                    playerID = response.payload["playerID"];
-                    playersInLobby.Add(response.payload["playerID"]);
+                    playerID = response.parameters["playerID"];
+                    playersInLobby.Add(response.parameters["playerID"]);
                     if(playersInLobby.Count == 2)
                     {
                         SceneManager.LoadScene("LevelOne");
@@ -132,13 +133,12 @@ public class NetworkController : MonoBehaviour
 
                 case "RegisterSucessful":
                     feedback.text = "Usuário registrado com sucesso!";
+                    Invoke("NextScene", 2f);
                     break;
 
                 case "LoginSucessful":
                     feedback.text = "Login realizado com sucesso!";
-                    SceneManager.LoadScene("Lobby");
                     break;
-
                 case "LoginFail_PasswordIncorrect":
                     feedback.text = "Senha Incorreta!";
                     break;
@@ -156,6 +156,11 @@ public class NetworkController : MonoBehaviour
         {
             Debug.Log("Erro ao deserializar: " + e);
         }
+    }
+
+    private void NextScene()
+    {
+        FindObjectOfType<GameController>().NextScene(1);
     }
 
     public void SendLogin(string email, string password)

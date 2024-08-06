@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject inventario;
-    public void StartGame()
+    public void NextScene(int value)
     {
-        SceneManager.LoadScene("LevelOne");
+        SceneManager.LoadScene(value);
     }
 
     public void ExitGame()
@@ -16,12 +15,12 @@ public class GameController : MonoBehaviour
         Application.Quit();
     }
 
-    public void ShowInventario()
+    public void ShowInventario(GameObject inventario)
     {
         inventario.SetActive(true);
     }
 
-    public void DisaspperInventario()
+    public void DisaspperInventario(GameObject inventario)
     {
         inventario.SetActive(false);
     }
