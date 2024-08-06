@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using System.Linq;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviour
 {
@@ -23,14 +25,16 @@ public class NetworkController : MonoBehaviour
     public Transform positionP2;
 
     // Server Adress
-    public string serverAddress = "";
+    public string serverAddress = "ws://192.168.0.10:9000";
+
+    public TextMeshProUGUI feedback;
 
     // WebSocket for communication with the server
     private WebSocket ws;
 
-    private int playerNumber;
-    private List<int> playersInLobby;
-    private List<int> playersInGame;
+    private string playerID;
+    private List<String> playersInLobby;
+    private List<String> playersInGame;
 
     private static NetworkController instance;
 
@@ -85,7 +89,7 @@ public class NetworkController : MonoBehaviour
         Action action = new Action
         {
             type = "Register",
-            actor = playerNumber + "",
+            actor = playerID,
             parameters = new Dictionary<string, string>() {
                 {"playerEmail", email},
                 {"playerPassword", password}
@@ -105,17 +109,44 @@ public class NetworkController : MonoBehaviour
             // To verif the type of message received
             switch (response.type)
             {
-                case "Wellcome":
+                case "Welcome":
                     // Case "Wellcome", the server sended the player's id that would be used to identify the player inside the game
-                    playersInLobby.Add(Int32.Parse(response.payload["playerNumber"]));
+                    Debug.Log("Welcome");
+                    playerID = response.payload["playerID"];
+                    playersInLobby.Add(response.payload["playerID"]);
                     if(playersInLobby.Count == 2)
                     {
-                        playersInGame.Add(playersInLobby[0]);
+                        SceneManager.LoadScene("LevelOne");
+                        CreateElizabeth();
+                        GameObject.Find("Elizabeth").GetComponent<PlayerController>().UpdateID(playersInLobby[0]);
                         playersInLobby.RemoveAt(0);
 
-                        playersInGame.Add(playersInLobby[0]);
-                        playersInGame.RemoveAt(0);
+                        CreateAnthony();
+                        GameObject.Find("Anthony").GetComponent<PlayerController>().UpdateID(playersInLobby[0]);
+                        playersInLobby.RemoveAt(0);
                     }
+                    break;
+                case "UserAlreadyExist":
+                    feedback.text = "Usuário já possui registro!";
+                    break;
+
+                case "RegisterSucessful":
+                    feedback.text = "Usuário registrado com sucesso!";
+                    break;
+
+                case "LoginSucessful":
+                    feedback.text = "Login realizado com sucesso!";
+                    SceneManager.LoadScene("Lobby");
+                    break;
+
+                case "LoginFail_PasswordIncorrect":
+                    feedback.text = "Senha Incorreta!";
+                    break;
+                case "LoginFail_EmailIncorrect":
+                    feedback.text = "Email Incorreto!";
+                    break;
+                case "LoginFail_UserNotRegistered":
+                    feedback.text = "Usuário não possui registro!";
                     break;
                 default:
                     break;
@@ -127,6 +158,19 @@ public class NetworkController : MonoBehaviour
         }
     }
 
+    public void SendLogin(string email, string password)
+    {
+        Action action = new Action
+        {
+            type = "Login",
+            actor = playerID,
+            parameters = new Dictionary<string, string>() {
+                {"playerEmail", email},
+                {"playerPassword", password}
+            }
+        };
+        ws.Send(action.ToJson());
+    }
     public void CreateElizabeth()
     {
         Transform parent = GameObject.Find("PlayerOne").transform;

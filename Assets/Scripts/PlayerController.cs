@@ -65,7 +65,7 @@ public class PlayerSkills
     }
 }
 
-public class Player1Controller : MonoBehaviour   
+public class PlayerController : MonoBehaviour   
 {
     //PRIVATE
     private Animator animator; // Character Animator
@@ -73,8 +73,10 @@ public class Player1Controller : MonoBehaviour
     private Vector2 movement; // Character Movement Direction
     private Rigidbody2D rb; // Character Rigidbody2D
     private Transform transform; // Character Transform
+    private string id;
     private string email { get; set; }
     private string password { get; set; }
+    private bool isOpen = false;
     private int aux = -1;
 
 
@@ -83,6 +85,11 @@ public class Player1Controller : MonoBehaviour
     void Awake()
     {
         nm = NetworkController.Instance;
+    }
+
+    public void UpdateID(string newId)
+    {
+        id = newId;
     }
 
     //PUBLIC
@@ -97,7 +104,23 @@ public class Player1Controller : MonoBehaviour
         transform = gameObject.GetComponent<Transform>();
 
         playerSkills = new PlayerSkills();
-         
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            if(!isOpen)
+            {
+                FindObjectOfType<GameController>().ShowInventario();
+                isOpen = !isOpen;
+            }
+            else
+            {
+                FindObjectOfType<GameController>().DisaspperInventario();
+                isOpen = !isOpen;
+            }
+        }
     }
 
     void UpdateMovement()

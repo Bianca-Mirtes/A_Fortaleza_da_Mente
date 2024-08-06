@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5473608476030653493}
   - component: {fileID: 382636235410523672}
   - component: {fileID: 6120575439016572263}
-  - component: {fileID: 2128974335608058224}
   - component: {fileID: 1769681956035253165}
+  - component: {fileID: 3043083615732593059}
   m_Layer: 0
   m_Name: Anthony
   m_TagString: Untagged
@@ -172,18 +172,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01124382, y: 0.0037146807}
   m_Size: {x: 0.6098747, y: 1.2275517}
   m_Direction: 0
---- !u!114 &2128974335608058224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976816826737870324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58587c2a371b68c44aebbfb04fb89ca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1769681956035253165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,3 +185,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+--- !u!114 &3043083615732593059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8976816826737870324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c323e77119860544390aebae8190d167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

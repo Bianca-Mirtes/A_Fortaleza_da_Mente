@@ -7,11 +7,10 @@ using UnityEngine.UI;
 public class CollectController : MonoBehaviour
 {
     private Transform feedbackCanva;
-    private GameObject inventario;
+    private Transform inventario;
     private void Start()
     {
         feedbackCanva = GameObject.FindGameObjectWithTag("Feedback").transform;
-        inventario = GameObject.FindGameObjectWithTag("Inventario");
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -19,6 +18,14 @@ public class CollectController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.C))
         {
             feedbackCanva.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = gameObject.name + " coletado!";
+            if (collision.gameObject.name == "Elizabeth")
+            {
+                inventario = GameObject.Find("PlayerOne").transform.GetChild(1);
+            }
+            else
+            {
+                inventario = GameObject.Find("PlayerTwo").transform.GetChild(1);
+            }
             int slotsCount = inventario.transform.GetChild(0).childCount;
             for(int ii=0; ii < slotsCount; ii++)
             {
