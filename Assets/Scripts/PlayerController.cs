@@ -121,12 +121,12 @@ public class PlayerController : MonoBehaviour
             }
             if (!isOpen)
             {
-                FindObjectOfType<GameController>().ShowInventario(inventario);
+                inventario.GetComponent<FadeController>().FadeIn();
                 isOpen = !isOpen;
             }
             else
             {
-                FindObjectOfType<GameController>().DisaspperInventario(inventario);
+                inventario.GetComponent<FadeController>().FadeOut();
                 isOpen = !isOpen;
             }
         }

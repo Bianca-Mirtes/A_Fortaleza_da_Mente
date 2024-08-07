@@ -6,41 +6,64 @@ using UnityEngine.UI;
 
 public class CollectController : MonoBehaviour
 {
-    private Transform feedbackCanva;
+    private GameObject[] feedbackCanvas;
     private Transform inventario;
+    private Transform feedbackCurrent;
     private void Start()
     {
-        feedbackCanva = GameObject.FindGameObjectWithTag("Feedback").transform;
+        feedbackCanvas = GameObject.FindGameObjectsWithTag("Feedback");
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            feedbackCanva.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = gameObject.name + " coletado!";
             if (collision.gameObject.name == "Elizabeth")
             {
                 inventario = GameObject.Find("PlayerOne").transform.GetChild(1);
+                feedbackCurrent = feedbackCanvas[0].transform.parent.name == "PlayerOne" ? feedbackCanvas[0].transform : feedbackCanvas[1].transform;
             }
             else
             {
                 inventario = GameObject.Find("PlayerTwo").transform.GetChild(1);
+                feedbackCurrent = feedbackCanvas[0].transform.parent.name == "PlayerTwo" ? feedbackCanvas[0].transform : feedbackCanvas[1].transform;
             }
+
             int slotsCount = inventario.transform.GetChild(0).childCount;
-            for(int ii=0; ii < slotsCount; ii++)
+            if (gameObject.name == "Relogio")
             {
-                Transform slot = inventario.transform.GetChild(0).GetChild(ii);
-                if (!slot.GetChild(0).gameObject.activeSelf)
+                feedbackCurrent.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = transform.GetChild(0).name + " coletado!";
+                for (int ii = 0; ii < slotsCount; ii++)
                 {
-                    slot.GetChild(0).GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
-                    slot.GetChild(0).gameObject.SetActive(true);
-                    break;
+                    Transform slot = inventario.transform.GetChild(0).GetChild(ii);
+                    if (!slot.GetChild(0).gameObject.activeSelf)
+                    {
+                        slot.GetChild(0).GetComponent<Image>().sprite = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+                        slot.GetChild(0).gameObject.SetActive(true);
+                        break;
+                    }
                 }
             }
-            FindObjectOfType<FadeController>().FadeIn();
-            gameObject.SetActive(false);
+            else
+            {
+                feedbackCurrent.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = gameObject.name + " coletado!";
+                for (int ii = 0; ii < slotsCount; ii++)
+                {
+                    Transform slot = inventario.transform.GetChild(0).GetChild(ii);
+                    if (!slot.GetChild(0).gameObject.activeSelf)
+                    {
+                        slot.GetChild(0).GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
+                        slot.GetChild(0).gameObject.SetActive(true);
+                        break;
+                    }
+                }
+            }
+            feedbackCurrent.gameObject.GetComponent<FadeController>().FadeIn();
+            if(!gameObject.name.Equals("Relogio"))
+            {
+                gameObject.SetActive(false);
+            }
             Invoke("FadeOut", 3f);
-            //feedbackCanva.GetChild(0).gameObject.SetActive(true);
         }
     }
 
@@ -48,17 +71,16 @@ public class CollectController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            feedbackCanva.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = gameObject.name + " coletado!";
+            feedbackCurrent.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = gameObject.name + " coletado!";
             FindObjectOfType<FadeController>().FadeIn();
             gameObject.SetActive(false);
             Invoke("FadeOut", 3f);
-            //feedbackCanva.GetChild(0).gameObject.SetActive(true);
         }
     }
 
     private void FadeOut()
     {
-        FindObjectOfType<FadeController>().FadeOut();
+        feedbackCurrent.gameObject.GetComponent<FadeController>().FadeOut();
         Destroy(gameObject);
     }
 }
