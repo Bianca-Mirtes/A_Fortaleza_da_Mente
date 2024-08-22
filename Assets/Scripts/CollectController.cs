@@ -32,6 +32,7 @@ public class CollectController : MonoBehaviour
             int slotsCount = inventario.transform.GetChild(0).childCount;
             if (gameObject.name == "Relogio")
             {
+                FindObjectOfType<VerticalDoorController>().SetObject(true);
                 feedbackCurrent.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = transform.GetChild(0).name + " coletado!";
                 for (int ii = 0; ii < slotsCount; ii++)
                 {
