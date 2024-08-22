@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.IO.IsolatedStorage;
 
 public class NetworkController : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class NetworkController : MonoBehaviour
     public Transform positionP2;
 
     // Server Adress
-    public string serverAddress = "ws://192.168.0.10:9000";
+    public string serverAddress = "ws://localhost:9000";
 
     private TextMeshProUGUI feedback;
 
@@ -33,8 +34,9 @@ public class NetworkController : MonoBehaviour
     private WebSocket ws;
 
     private string playerID;
-    private List<string> playersInLobby;
+    private List<string> playersInLobby = new List<string>();
     private List<string> playersInGame;
+    private bool isConnected = false;
 
     private static NetworkController instance;
 
@@ -65,7 +67,6 @@ public class NetworkController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        ServerConnection();
     }
 
     private void ServerConnection()
@@ -115,29 +116,16 @@ public class NetworkController : MonoBehaviour
                     Debug.Log("Welcome");
                     playerID = response.parameters["playerID"];
                     playersInLobby.Add(response.parameters["playerID"]);
-                    if(playersInLobby.Count == 2)
-                    {
-                        SceneManager.LoadScene("LevelOne");
-                        CreateElizabeth();
-                        GameObject.Find("Elizabeth").GetComponent<PlayerController>().UpdateID(playersInLobby[0]);
-                        playersInLobby.RemoveAt(0);
-
-                        CreateAnthony();
-                        GameObject.Find("Anthony").GetComponent<PlayerController>().UpdateID(playersInLobby[0]);
-                        playersInLobby.RemoveAt(0);
-                    }
                     break;
                 case "UserAlreadyExist":
                     feedback.text = "Usuário já possui registro!";
                     break;
-
                 case "RegisterSucessful":
                     feedback.text = "Usuário registrado com sucesso!";
-                    Invoke("NextScene", 2f);
                     break;
-
                 case "LoginSucessful":
                     feedback.text = "Login realizado com sucesso!";
+                    Invoke("LoadLobby", 2f);
                     break;
                 case "LoginFail_PasswordIncorrect":
                     feedback.text = "Senha Incorreta!";
@@ -158,7 +146,28 @@ public class NetworkController : MonoBehaviour
         }
     }
 
-    private void NextScene()
+    private void Start()
+    {
+        if (!isConnected)
+        {
+            ServerConnection();
+            isConnected = true;
+        }
+    }
+
+    void Update()
+    {
+        /*if (playersInLobby.Count == 2)
+        {
+            SceneManager.LoadScene(2);
+            FindObjectOfType<GameController>().UpdateId(playersInLobby[0], "Elizabeth");
+            playersInLobby.RemoveAt(0);
+            FindObjectOfType<GameController>().UpdateId(playersInLobby[0], "Anthony");
+            playersInLobby.RemoveAt(0);
+        }*/
+    }
+
+    private void LoadLobby()
     {
         FindObjectOfType<GameController>().NextScene(1);
     }

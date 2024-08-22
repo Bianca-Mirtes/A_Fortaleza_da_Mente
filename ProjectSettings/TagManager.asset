@@ -10,6 +10,7 @@ TagManager:
   - InventarioA
   - InputEmail
   - InputPassword
+  - Dialogo
   layers:
   - Default
   - TransparentFX

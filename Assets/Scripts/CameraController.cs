@@ -4,8 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
-{
-    public Transform player;
+{ 
+
+   private Transform player;
+
+    private void Start()
+    {
+        if(transform.parent.name == "PlayerOne")
+        {
+            player = GameObject.FindGameObjectWithTag("Elizabeth").transform;
+        }
+        else
+        {
+            player = GameObject.FindGameObjectWithTag("Anthony").transform;
+        }
+    }
 
     // Update is called once per frame
     void Update()

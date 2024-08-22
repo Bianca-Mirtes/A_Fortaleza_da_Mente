@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Skill
 {
@@ -132,6 +133,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GameObject talk = GameObject.Find("Talk1");
+            DialogueController.instance.StartConversation(talk.GetComponent<DialogueContainer>());
+        }
+    }
+
     void UpdateMovement()
     {        
         /*
@@ -198,5 +208,18 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         UpdateMovement();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "EstanteElizabeth" || collision.gameObject.name == "EstantePais")
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                collision.gameObject.SetActive(false);
+                GameObject.Find("SecretPass").GetComponent<TilemapRenderer>().sortingOrder = 1;
+                GameObject.Find("FalseWall").GetComponent<TilemapRenderer>().sortingOrder = 5;
+            }
+        }
     }
 }
