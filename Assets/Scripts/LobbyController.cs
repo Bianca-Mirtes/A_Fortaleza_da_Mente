@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LobbyController : MonoBehaviour
@@ -19,15 +20,24 @@ public class LobbyController : MonoBehaviour
     }
     public void CreateRoom(TMP_InputField roomName)
     {
-        // Verifica se é uma string vazia
+        // Verifica se Ã© uma string vazia
         if(roomName.textComponent.text == string.Empty)
         {
             return;
         }
 
         NetworkController.Instance.CreateRoom(roomName.textComponent.text);
+    }
 
-        roomCanvas.transform.GetChild(4).GetComponent<TMP_Text>().text = NetworkController.Instance.player.username;
+    public void UpdateLabels(string player1, string player2)
+    {
+        roomCanvas.transform.GetChild(4).GetComponent<TMP_Text>().text = player1;
+        roomCanvas.transform.GetChild(5).GetComponent<TMP_Text>().text = player2;
+    }
+
+    public void ChangeStateCanvas(int child)
+    {
+        roomCanvas.transform.GetChild(child).GetComponent<TMP_Text>().text = NetworkController.Instance.player.username;
         chatCanvas.SetActive(false);
         roomCanvas.SetActive(true);
         roomSystemCanvas.SetActive(false);
@@ -35,17 +45,12 @@ public class LobbyController : MonoBehaviour
 
     public void JoinRoom(TMP_InputField roomName)
     {
-        // verifica se é uma string vazia
+        // verifica se Ã© uma string vazia
         if (roomName.textComponent.text == string.Empty)
         {
             return;
         }
         NetworkController.Instance.JoinRoom(roomName.textComponent.text);
-
-        roomCanvas.transform.GetChild(5).GetComponent<TMP_Text>().text = NetworkController.Instance.player.username;
-        chatCanvas.SetActive(false);
-        roomCanvas.SetActive(true);
-        roomSystemCanvas.SetActive(false);
     }
 
     public void FeedbackRoom(string feedback, string type)
@@ -64,6 +69,6 @@ public class LobbyController : MonoBehaviour
 
     public void ExitRoom()
     {
-        //NetworkController.Instance.JoinRoom(roomName.textComponent.text);
+        NetworkController.Instance.ExitRoom();
     }
 }
