@@ -12,6 +12,7 @@ TagManager:
   - InputPassword
   - Dialogo
   - InputUsername
+  - TurningPoint
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e32a9e0ebcbbb184885d11db530a232f
+guid: dc24954f3fbfdcf4495c6443b78a363f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,85 +97,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spider-sheet
+      name: spider-Sheet-export_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 12
-        width: 12
-        height: 12
+        y: 120
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b637b935a5e08d64ea719e0d7bdac650
-      internalID: -960164700
+      spriteID: 022bbfa8168f95a439919ce959e316b0
+      internalID: -1785603629
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider-sheet_1
+      name: spider-Sheet-export_1
       rect:
         serializedVersion: 2
-        x: 12
-        y: 12
-        width: 12
-        height: 12
+        x: 120
+        y: 120
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5f860c7af4ac374b8fa0c85d1742dc6
-      internalID: -775976884
+      spriteID: dfc065a4012f3224b9e436be0164bc1c
+      internalID: 1540349126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider-sheet_2
+      name: spider-Sheet-export_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 12
-        height: 12
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11fbb597cd50fb041b0cc9fc9fc8f7fb
-      internalID: 787062645
+      spriteID: 6dfaeb08237e35d43981a85e58ce2183
+      internalID: 2146759334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spider-sheet_3
+      name: spider-Sheet-export_3
       rect:
         serializedVersion: 2
-        x: 12
+        x: 120
         y: 0
-        width: 12
-        height: 12
+        width: 120
+        height: 120
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab2b0cf1cd2b3a348b5f909dc1088ace
-      internalID: -1191535990
+      spriteID: 7a613711d2a8f5349a022faa94113a7c
+      internalID: -1170296638
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spider-sheet: -960164700
-      spider-sheet_1: -775976884
-      spider-sheet_2: 787062645
-      spider-sheet_3: -1191535990
+      spider-Sheet-export_0: -1785603629
+      spider-Sheet-export_1: 1540349126
+      spider-Sheet-export_2: 2146759334
+      spider-Sheet-export_3: -1170296638
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

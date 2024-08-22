@@ -68,6 +68,9 @@ public class PlayerSkills
 
 public class PlayerController : MonoBehaviour   
 {
+    //PUBLIC
+    public int maxHealth;
+
     //PRIVATE
     private Animator animator; // Character Animator
     private float speed = 3f; // Character Speed
@@ -79,6 +82,8 @@ public class PlayerController : MonoBehaviour
     private string password { get; set; }
     private bool isOpen = false;
     private int aux = -1;
+    private int health;
+    
 
 
     NetworkController nm;
@@ -100,6 +105,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator =gameObject.GetComponent<Animator>();
         transform = gameObject.GetComponent<Transform>();
@@ -220,6 +226,20 @@ public class PlayerController : MonoBehaviour
                 GameObject.Find("SecretPass").GetComponent<TilemapRenderer>().sortingOrder = 1;
                 GameObject.Find("FalseWall").GetComponent<TilemapRenderer>().sortingOrder = 5;
             }
+        }
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        health -= damage;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        if(health <= 0)
+        {
+            animator.SetBool("isAlive", false);
+            health = 0;
         }
     }
 }
