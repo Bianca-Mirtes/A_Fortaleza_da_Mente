@@ -11,6 +11,7 @@ TagManager:
   - InputEmail
   - InputPassword
   - Dialogo
+  - InputUsername
   layers:
   - Default
   - TransparentFX

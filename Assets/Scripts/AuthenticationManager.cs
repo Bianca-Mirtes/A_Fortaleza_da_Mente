@@ -6,6 +6,8 @@ public class AuthenticationManager : MonoBehaviour
     public static AuthenticationManager Instance;
     private TMP_InputField email;
     private TMP_InputField password;
+    private TMP_InputField username;
+
     private void Awake()
     {
         if(Instance == null)
@@ -23,7 +25,8 @@ public class AuthenticationManager : MonoBehaviour
     {
         email = GameObject.FindGameObjectWithTag("InputEmail").GetComponent<TMP_InputField>();
         password = GameObject.FindGameObjectWithTag("InputPassword").GetComponent<TMP_InputField>();
-        FindObjectOfType<NetworkController>().SendRegister(email.textComponent.text, password.textComponent.text);
+        username = GameObject.FindGameObjectWithTag("InputUsername").GetComponent<TMP_InputField>();
+        FindObjectOfType<NetworkController>().SendRegister(email.textComponent.text, password.textComponent.text, username.textComponent.text);
     }
 
     // to make the user's login
@@ -31,6 +34,7 @@ public class AuthenticationManager : MonoBehaviour
     {
         email = GameObject.FindGameObjectWithTag("InputEmail").GetComponent<TMP_InputField>();
         password = GameObject.FindGameObjectWithTag("InputPassword").GetComponent<TMP_InputField>();
-        FindObjectOfType<NetworkController>().SendLogin(email.textComponent.text, password.textComponent.text);
+        username = GameObject.FindGameObjectWithTag("InputUsername").GetComponent<TMP_InputField>();
+        FindObjectOfType<NetworkController>().SendLogin(email.textComponent.text, password.textComponent.text, username.textComponent.text);
     }
 }

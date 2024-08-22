@@ -33,10 +33,11 @@ public class NetworkController : MonoBehaviour
     // WebSocket for communication with the server
     private WebSocket ws;
 
-    private string playerID;
-    private List<string> playersInLobby = new List<string>();
-    private List<string> playersInGame;
+    //protected string playerID { get; set; }
+    public Player player = new Player();
+
     private bool isConnected = false;
+    public bool isCreator { get; set; }
 
     private static NetworkController instance;
 
@@ -84,17 +85,20 @@ public class NetworkController : MonoBehaviour
         // After define the events, to connect at server
         ws.Connect();
     }
-
-    public void SendRegister(string email, string password)
+    public void SendRegister(string email, string password, string username)
     {
         feedback = GameObject.FindGameObjectWithTag("Feedback").GetComponent<TextMeshProUGUI>();
+        player.email = email;
+        player.password = password;
+        player.username = username;
         Action action = new Action
         {
             type = "Register",
-            actor = playerID,
+            actor = player.id,
             parameters = new Dictionary<string, string>() {
                 {"playerEmail", email},
-                {"playerPassword", password}
+                {"playerPassword", password},
+                {"playerUsername", username}
             }
         };
         ws.Send(action.ToJson());
@@ -114,11 +118,16 @@ public class NetworkController : MonoBehaviour
                 case "Welcome":
                     // Case "Wellcome", the server sended the player's id that would be used to identify the player inside the game
                     Debug.Log("Welcome");
-                    playerID = response.parameters["playerID"];
-                    playersInLobby.Add(response.parameters["playerID"]);
+                    player.id = response.parameters["playerID"];
                     break;
-                case "UserAlreadyExist":
-                    feedback.text = "Usuário já possui registro!";
+                case "Chat":
+                    FindObjectOfType<ChatManager>().EventSendMessage(response.parameters["message"]);
+                    break;
+                case "UserAlreadyExistWithThisEmail":
+                    feedback.text = "Usuário já possui registro com esse email!";
+                    break;
+                case "UserAlreadyExistWithThisUsername":
+                    feedback.text = "Usuário já possui registro com esse username!";
                     break;
                 case "RegisterSucessful":
                     feedback.text = "Usuário registrado com sucesso!";
@@ -133,8 +142,26 @@ public class NetworkController : MonoBehaviour
                 case "LoginFail_EmailIncorrect":
                     feedback.text = "Email Incorreto!";
                     break;
+                case "LoginFail_UsernameIncorrect":
+                    feedback.text = "Username Incorreto";
+                    break;
                 case "LoginFail_UserNotRegistered":
                     feedback.text = "Usuário não possui registro!";
+                    break;
+                case "RoomDontExist":
+                    FindObjectOfType<LobbyController>().FeedbackRoom("Não existe uma sala com esse nome!", "J");
+                    break;
+                case "RoomCreated":
+                    FindObjectOfType<LobbyController>().FeedbackRoom("Sala criada com sucesso!", "C");
+                    break;
+                case "RoomComplete":
+                    FindObjectOfType<LobbyController>().FeedbackRoom("A sala está cheia! Partida em andamento!", "J");
+                    break;
+                case "RoomAlreadyExist":
+                    FindObjectOfType<LobbyController>().FeedbackRoom("Já existe uma sala com esse nome!", "C");
+                    break;
+                case "JoinedInRoom":
+                    FindObjectOfType<LobbyController>().FeedbackRoom("Sala disponível!", "J");
                     break;
                 default:
                     break;
@@ -155,32 +182,61 @@ public class NetworkController : MonoBehaviour
         }
     }
 
-    void Update()
+    public void CreateRoom(string roomName)
     {
-        /*if (playersInLobby.Count == 2)
+        isCreator = true;
+        Action action = new Action
         {
-            SceneManager.LoadScene(2);
-            FindObjectOfType<GameController>().UpdateId(playersInLobby[0], "Elizabeth");
-            playersInLobby.RemoveAt(0);
-            FindObjectOfType<GameController>().UpdateId(playersInLobby[0], "Anthony");
-            playersInLobby.RemoveAt(0);
-        }*/
+            type = "CreateRoom",
+            actor = player.id,
+            parameters = new Dictionary<string, string>() {
+                {"roomName", roomName},
+                {"creator", player.username}
+            }
+        };
+        ws.Send(action.ToJson());
     }
-
+    public void JoinRoom(string roomName)
+    {
+        Action action = new Action
+        {
+            type = "JoinRoom",
+            actor = player.id,
+            parameters = new Dictionary<string, string>() {
+                {"roomName", roomName},
+                {"playerName", player.username}
+            }
+        };
+        ws.Send(action.ToJson());
+    }
     private void LoadLobby()
     {
         FindObjectOfType<GameController>().NextScene(1);
     }
 
-    public void SendLogin(string email, string password)
+    public void SendChatMessage(string message)
+    {
+        Action action = new Action
+        {
+            type = "Chat",
+            actor = player.id,
+            parameters = new Dictionary<string, string>() {
+                {"message", message}
+            }
+        };
+        ws.Send(action.ToJson());
+    }
+
+    public void SendLogin(string email, string password, string username)
     {
         Action action = new Action
         {
             type = "Login",
-            actor = playerID,
+            actor = player.id,
             parameters = new Dictionary<string, string>() {
                 {"playerEmail", email},
-                {"playerPassword", password}
+                {"playerPassword", password},
+                {"playerUsername", username}
             }
         };
         ws.Send(action.ToJson());
