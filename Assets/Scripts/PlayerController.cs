@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class Skill
 {
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
 {
     //PUBLIC
     public int maxHealth;
+    
 
     //PRIVATE
     private Animator animator; // Character Animator
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb; // Character Rigidbody2D
     private Transform transform; // Character Transform
     private string id;
+    private Image healthBar;
     private string email { get; set; }
     private string password { get; set; }
     private bool isOpen = false;
@@ -109,6 +112,7 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator =gameObject.GetComponent<Animator>();
         transform = gameObject.GetComponent<Transform>();
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
 
         playerSkills = new PlayerSkills();
     }
@@ -241,5 +245,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isAlive", false);
             health = 0;
         }
+        healthBar.fillAmount = ((float)health) / ((float)maxHealth);
     }
 }
