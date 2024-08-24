@@ -10,9 +10,14 @@ using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.IO.IsolatedStorage;
+using System.Collections.Concurrent;
 
 public class NetworkController : MonoBehaviour
 {
+    private ConcurrentQueue<string> messageChat = new ConcurrentQueue<string>();
+    private ConcurrentQueue<string> feedbackCreate = new ConcurrentQueue<string>();
+    private ConcurrentQueue<string> feedbackJoin = new ConcurrentQueue<string>();
+
     // Elizabeth's Prefab
     public GameObject ElizabethPrefab;
 
@@ -28,7 +33,7 @@ public class NetworkController : MonoBehaviour
     // Server Adress
     public string serverAddress = "ws://localhost:9000";
 
-    private TextMeshProUGUI feedback;
+    public TextMeshProUGUI feedback;
 
     // WebSocket for communication with the server
     private WebSocket ws;
@@ -68,6 +73,28 @@ public class NetworkController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Update()
+    {
+        if(SceneManager.GetActiveScene().name == "Lobby")
+        {
+            TMP_Text textBox = GameObject.Find("TextBox").GetComponent<TextMeshProUGUI>();
+            TMP_Text feedbackC = GameObject.Find("FeedbackC").GetComponent<TextMeshProUGUI>();
+            TMP_Text feedbackJ = GameObject.Find("FeedbackJ").GetComponent<TextMeshProUGUI>();
+            while (messageChat.TryDequeue(out string message))
+            {
+                textBox.text = message;
+            }
+            while (feedbackCreate.TryDequeue(out string message))
+            {
+                feedbackC.text = message;
+            }
+            while (feedbackJoin.TryDequeue(out string message))
+            {
+                feedbackJ.text = message;
+            }
+        }   
     }
 
     private void ServerConnection()
@@ -121,7 +148,7 @@ public class NetworkController : MonoBehaviour
                     player.id = response.parameters["playerID"];
                     break;
                 case "Chat":
-                    FindObjectOfType<ChatManager>().EventSendMessage(response.parameters["message"]);
+                    messageChat.Enqueue(response.parameters["message"]);
                     break;
                 case "UserAlreadyExistWithThisEmail":
                     feedback.text = "Usuário já possui registro com esse email!";
@@ -149,6 +176,7 @@ public class NetworkController : MonoBehaviour
                     feedback.text = "Usuário não possui registro!";
                     break;
                 case "RoomDontExist":
+
                     FindObjectOfType<LobbyController>().FeedbackRoom("Não existe uma sala com esse nome!", "J");
                     break;
                 case "RoomCreated":
