@@ -50,6 +50,9 @@ public class NetworkController : MonoBehaviour
 
     private bool isConnected = false;
     public bool isCreator { get; set; }
+    public bool canStart { get; set; }
+
+    private bool roomIsComplete;
 
     private static NetworkController instance;
 
@@ -88,11 +91,10 @@ public class NetworkController : MonoBehaviour
         {
             while (fluxo.TryDequeue(out string message))
             {
-                if(message == "Alguém saiu da Sala")
+                if (message == "Alguém saiu da Sala!")
                 {
                     if (isCreator)
                     {
-                        SendUpdateRoom(true);
                         FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
                     }
                     else
@@ -100,27 +102,29 @@ public class NetworkController : MonoBehaviour
                         isCreator = true;
                         FindObjectOfType<LobbyController>().ChangeLabel(4, player.username);
                         FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
-                        SendUpdateRoom(true);
                     }
+                    SendUpdateRoom(true);
+                    canStart = false;
                 }
-                if(message == "Alguém entrou na Sala")
+                if(message == "Alguém entrou na Sala!")
                 {
+                    canStart = true;
                     FindObjectOfType<LobbyController>().ChangeLabel(5, updateLabelRoom);
                     SendUpdateRoom(false);
                 }
-                if(message == "Usuario saiu da Sala")
+                if(message == "Usuario saiu da Sala!")
                 {
                     if (isCreator)
                     {
                         FindObjectOfType<LobbyController>().ChangeLabel(4, updateLabelRoom);
                         FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
-                        SendUpdateRoom(true);
                     }
                     else
                     {
                         FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
-                        SendUpdateRoom(true);
                     }
+                    SendUpdateRoom(true);
+                    canStart = false;
                 }
             }
             TMP_Text textBox = GameObject.Find("TextBoxChat").GetComponent<TextMeshProUGUI>();
@@ -140,6 +144,7 @@ public class NetworkController : MonoBehaviour
                     textBox.text = string.Empty;
                     FindObjectOfType<LobbyController>().ChangeStateCanvas(4);
                     FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
+                    SendUpdateRoom(true);
                 }
             }
             while (feedbackJoin.TryDequeue(out string message))
@@ -152,6 +157,7 @@ public class NetworkController : MonoBehaviour
                     textBox.text = string.Empty;
                     FindObjectOfType<LobbyController>().ChangeStateCanvas(5);
                     FindObjectOfType<LobbyController>().ChangeLabel(4, updateLabelRoom);
+                    SendUpdateRoom(false);
                 }
             }
         }
@@ -170,24 +176,19 @@ public class NetworkController : MonoBehaviour
         }
         if(SceneManager.GetActiveScene().name == "LeveOne")
         {
-            if (GameController.Instance.isStart)
+            if (isCreator)
             {
-                GameController.Instance.SetisStart(false);
-                if (isCreator)
-                {
-                    CreateElizabeth();
-                }
-                else
-                {
-                    CreateAnthony();
-                }
+                CreateElizabeth();
+            }
+            else
+            {
+                CreateAnthony();
             }
         }
     }
 
    public void SendUpdateRoom(bool state)
     {
-        isCreator = true;
         Action action = new Action
         {
             type = "UpdateRoom",
@@ -294,15 +295,19 @@ public class NetworkController : MonoBehaviour
                     updateLabelRoom = response.parameters["creator"];
                     break;
                 case "JoinedSomethingInRoom":
-                    fluxo.Enqueue("Alguém entrou na Sala");
+                    fluxo.Enqueue("Alguém entrou na Sala!");
                     updateLabelRoom = response.parameters["player2"];
                     break;
                 case "ExitedOfTheRoom":
-                    fluxo.Enqueue("Usuario saiu da Sala");
+                    fluxo.Enqueue("Usuario saiu da Sala!");
                     updateLabelRoom = response.parameters["playerName"];
+                    if (isCreator)
+                    {
+                        isCreator = false;
+                    }
                     break;
                 case "ExitedSomethingOfTheRoom":
-                    fluxo.Enqueue("Alguém saiu da Sala");
+                    fluxo.Enqueue("Alguém saiu da Sala!");
                     updateLabelRoom = response.parameters["playerName"];
                     break;
                 default:

@@ -34,8 +34,18 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public bool isStart = false;
-    public void NextScene(int value)
+    public void StartGame()
+    {
+        Debug.Log(NetworkController.Instance.canStart);
+        if (NetworkController.Instance.canStart)
+        {
+            SceneManager.LoadScene(2);
+        }
+    }
+
+    public void ChangeScene(int value)
     {
         SceneManager.LoadScene(value);
     }

@@ -593,7 +593,6 @@ MonoBehaviour:
   AnthonyPrefab: {fileID: 8976816826737870324, guid: 588324a5fa4cc364284006488a332fd9, type: 3}
   positionP2: {fileID: 8532638440012114362, guid: 0d725a6f1f3cf794785c8b947cd0ec46, type: 3}
   serverAddress: ws://localhost:9000
-  feedback: {fileID: 274933162}
 --- !u!4 &267739051
 Transform:
   m_ObjectHideFlags: 0
@@ -1406,6 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286f7aba5d709fe459f5a532c32e1c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStart: 0
 --- !u!4 &617862416
 Transform:
   m_ObjectHideFlags: 0
@@ -2362,7 +2362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '*entre 8-20 caracteres.'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79307f501eb267b44be9d7ca808a3dfb, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 14b25a851a93d6047bc48b8bdadaaff5, type: 2}
