@@ -17,6 +17,8 @@ public class NetworkController : MonoBehaviour
     private ConcurrentQueue<string> messageChat = new ConcurrentQueue<string>();
     private ConcurrentQueue<string> feedbackCreate = new ConcurrentQueue<string>();
     private ConcurrentQueue<string> feedbackJoin = new ConcurrentQueue<string>();
+    private ConcurrentQueue<string> feedback = new ConcurrentQueue<string>();
+    private ConcurrentQueue<string> fluxo = new ConcurrentQueue<string>();
 
     // Elizabeth's Prefab
     public GameObject ElizabethPrefab;
@@ -33,8 +35,6 @@ public class NetworkController : MonoBehaviour
     // Server Adress
     public string serverAddress = "ws://localhost:9000";
 
-    public TextMeshProUGUI feedback;
-
     // WebSocket for communication with the server
     private WebSocket ws;
 
@@ -42,6 +42,11 @@ public class NetworkController : MonoBehaviour
     public Player player = new Player();
 
     private string roomNameWs = string.Empty;
+    private string updateLabelRoom = string.Empty;
+    /*
+        private TMP_Text textBox;
+        private TMP_Text feedbackC;
+        private TMP_Text feedbackJ;*/
 
     private bool isConnected = false;
     public bool isCreator { get; set; }
@@ -81,27 +86,123 @@ public class NetworkController : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "Lobby")
         {
-            TMP_Text textBox = GameObject.Find("TextBox").GetComponent<TextMeshProUGUI>();
-            TMP_Text feedbackC = GameObject.Find("FeedbackC").GetComponent<TextMeshProUGUI>();
-            TMP_Text feedbackJ = GameObject.Find("FeedbackJ").GetComponent<TextMeshProUGUI>();
+            while (fluxo.TryDequeue(out string message))
+            {
+                if(message == "Alguém saiu da Sala")
+                {
+                    if (isCreator)
+                    {
+                        SendUpdateRoom(true);
+                        FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
+                    }
+                    else
+                    {
+                        isCreator = true;
+                        FindObjectOfType<LobbyController>().ChangeLabel(4, player.username);
+                        FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
+                        SendUpdateRoom(true);
+                    }
+                }
+                if(message == "Alguém entrou na Sala")
+                {
+                    FindObjectOfType<LobbyController>().ChangeLabel(5, updateLabelRoom);
+                    SendUpdateRoom(false);
+                }
+                if(message == "Usuario saiu da Sala")
+                {
+                    if (isCreator)
+                    {
+                        FindObjectOfType<LobbyController>().ChangeLabel(4, updateLabelRoom);
+                        FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
+                        SendUpdateRoom(true);
+                    }
+                    else
+                    {
+                        FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
+                        SendUpdateRoom(true);
+                    }
+                }
+            }
+            TMP_Text textBox = GameObject.Find("TextBoxChat").GetComponent<TextMeshProUGUI>();
+            TMP_Text feedbackC = GameObject.Find("FeedbackCreate").GetComponent<TextMeshProUGUI>();
+            TMP_Text feedbackJ = GameObject.Find("FeedbackJoin").GetComponent<TextMeshProUGUI>();
             while (messageChat.TryDequeue(out string message))
             {
-                textBox.text = message;
+                textBox.text += $"\n{message}";
             }
             while (feedbackCreate.TryDequeue(out string message))
             {
                 feedbackC.text = message;
+                if(message == "Sala criada com sucesso!")
+                {
+                    feedbackJ.text = string.Empty;
+                    feedbackC.text = string.Empty;
+                    textBox.text = string.Empty;
+                    FindObjectOfType<LobbyController>().ChangeStateCanvas(4);
+                    FindObjectOfType<LobbyController>().ChangeLabel(5, "Esperando player 2...");
+                }
             }
             while (feedbackJoin.TryDequeue(out string message))
             {
                 feedbackJ.text = message;
+                if (message == "Sala disponivel!")
+                {
+                    feedbackC.text = string.Empty;
+                    feedbackJ.text = string.Empty;
+                    textBox.text = string.Empty;
+                    FindObjectOfType<LobbyController>().ChangeStateCanvas(5);
+                    FindObjectOfType<LobbyController>().ChangeLabel(4, updateLabelRoom);
+                }
             }
-        }   
+        }
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            TMP_Text feedbackMenu = GameObject.FindGameObjectWithTag("Feedback").GetComponent<TextMeshProUGUI>();
+            while (feedback.TryDequeue(out string message))
+            {
+                feedbackMenu.text = message;
+                if (message == "Login realizado com sucesso!")
+                {
+                    SceneManager.LoadScene(1);
+                }
+
+            }
+        }
+        if(SceneManager.GetActiveScene().name == "LeveOne")
+        {
+            if (GameController.Instance.isStart)
+            {
+                GameController.Instance.SetisStart(false);
+                if (isCreator)
+                {
+                    CreateElizabeth();
+                }
+                else
+                {
+                    CreateAnthony();
+                }
+            }
+        }
+    }
+
+   public void SendUpdateRoom(bool state)
+    {
+        isCreator = true;
+        Action action = new Action
+        {
+            type = "UpdateRoom",
+            actor = player.id,
+            parameters = new Dictionary<string, string>() {
+                {"state", "true"},
+                {"roomName", roomNameWs}
+            }
+        };
+        ws.Send(action.ToJson());
     }
 
     private void ServerConnection()
     {
-        ws = new WebSocket(this.serverAddress);
+        ws = new WebSocket(serverAddress);
 
         // OnMessage is called always that a message is received
         ws.OnMessage += (sender, e) =>
@@ -116,7 +217,6 @@ public class NetworkController : MonoBehaviour
     }
     public void SendRegister(string email, string password, string username)
     {
-        feedback = GameObject.FindGameObjectWithTag("Feedback").GetComponent<TextMeshProUGUI>();
         player.email = email;
         player.password = password;
         player.username = username;
@@ -153,51 +253,57 @@ public class NetworkController : MonoBehaviour
                     messageChat.Enqueue(response.parameters["message"]);
                     break;
                 case "UserAlreadyExistWithThisEmail":
-                    feedback.text = "Usuário já possui registro com esse email!";
+                    feedback.Enqueue("Usuário já possui registro com esse email!");
                     break;
                 case "UserAlreadyExistWithThisUsername":
-                    feedback.text = "Usuário já possui registro com esse username!";
+                    feedback.Enqueue("Usuário já possui registro com esse username!");
                     break;
                 case "RegisterSucessful":
-                    feedback.text = "Usuário registrado com sucesso!";
+                    feedback.Enqueue("Usuário registrado com sucesso!");
                     break;
                 case "LoginSucessful":
-                    feedback.text = "Login realizado com sucesso!";
-                    Invoke("LoadLobby", 2f);
+                    feedback.Enqueue("Login realizado com sucesso!");
                     break;
                 case "LoginFail_PasswordIncorrect":
-                    feedback.text = "Senha Incorreta!";
+                    feedback.Enqueue("Senha Incorreta!");
                     break;
                 case "LoginFail_EmailIncorrect":
-                    feedback.text = "Email Incorreto!";
+                    feedback.Enqueue("Email Incorreto!");
                     break;
                 case "LoginFail_UsernameIncorrect":
-                    feedback.text = "Username Incorreto";
+                    feedback.Enqueue("Username Incorreto!");
                     break;
                 case "LoginFail_UserNotRegistered":
-                    feedback.text = "Usuário não possui registro!";
+                    feedback.Enqueue("Usuário não possui registro!");
                     break;
                 case "RoomDontExist":
-
-                    FindObjectOfType<LobbyController>().FeedbackRoom("N�o existe uma sala com esse nome!", "J");
+                    feedbackJoin.Enqueue("Não existe uma sala com esse nome!");
                     break;
                 case "RoomCreated":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("Sala criada com sucesso!", "C");
+                    feedbackCreate.Enqueue("Sala criada com sucesso!");
                     roomNameWs = response.parameters["roomName"];
-                    FindObjectOfType<LobbyController>().ChangeStateCanvas(4);
                     break;
                 case "RoomComplete":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("A sala está cheia! Partida em andamento!", "J");
+                    feedbackJoin.Enqueue("A sala está cheia! Partida em andamento!");
                     break;
                 case "RoomAlreadyExist":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("Já existe uma sala com esse nome!", "C");
+                    feedbackCreate.Enqueue("Já existe uma sala com esse nome!");
                     break;
                 case "JoinedInRoom":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("Sala disponível!", "J");
-                    FindObjectOfType<LobbyController>().ChangeStateCanvas(5);
+                    feedbackJoin.Enqueue("Sala disponivel!");
+                    updateLabelRoom = response.parameters["creator"];
                     break;
-                case "ExitRoomSucessful":
-                    FindObjectOfType<LobbyController>().UpdateLabels(response.parameters["player1Name"], response.parameters["player2Name"]);
+                case "JoinedSomethingInRoom":
+                    fluxo.Enqueue("Alguém entrou na Sala");
+                    updateLabelRoom = response.parameters["player2"];
+                    break;
+                case "ExitedOfTheRoom":
+                    fluxo.Enqueue("Usuario saiu da Sala");
+                    updateLabelRoom = response.parameters["playerName"];
+                    break;
+                case "ExitedSomethingOfTheRoom":
+                    fluxo.Enqueue("Alguém saiu da Sala");
+                    updateLabelRoom = response.parameters["playerName"];
                     break;
                 default:
                     break;
@@ -208,7 +314,6 @@ public class NetworkController : MonoBehaviour
             Debug.Log("Erro ao deserializar: " + e);
         }
     }
-
     private void Start()
     {
         if (!isConnected)
@@ -226,28 +331,23 @@ public class NetworkController : MonoBehaviour
             type = "CreateRoom",
             actor = player.id,
             parameters = new Dictionary<string, string>() {
-                {"roomName", roomName},
-                {"creator", player.username}
+                {"roomName", roomName.Trim()}
             }
         };
         ws.Send(action.ToJson());
     }
     public void JoinRoom(string roomName)
     {
+        isCreator = false;
         Action action = new Action
         {
             type = "JoinRoom",
             actor = player.id,
             parameters = new Dictionary<string, string>() {
-                {"roomName", roomName},
-                {"playerName", player.username}
+                {"roomName", roomName.Trim()}
             }
         };
         ws.Send(action.ToJson());
-    }
-    private void LoadLobby()
-    {
-        FindObjectOfType<GameController>().NextScene(1);
     }
 
     public void ExitRoom()
@@ -257,8 +357,7 @@ public class NetworkController : MonoBehaviour
             type = "ExitRoom",
             actor = player.id,
             parameters = new Dictionary<string, string>() {
-                {"roomName", roomNameWs},
-                {"playerName", player.username}
+                {"roomName", roomNameWs.Trim()}
             }
         };
         ws.Send(action.ToJson());
@@ -271,7 +370,7 @@ public class NetworkController : MonoBehaviour
             type = "Chat",
             actor = player.id,
             parameters = new Dictionary<string, string>() {
-                {"message", message}
+                {"message", message.Trim()}
             }
         };
         ws.Send(action.ToJson());
@@ -284,9 +383,9 @@ public class NetworkController : MonoBehaviour
             type = "Login",
             actor = player.id,
             parameters = new Dictionary<string, string>() {
-                {"playerEmail", email},
-                {"playerPassword", password},
-                {"playerUsername", username}
+                {"playerEmail", email.Trim()},
+                {"playerPassword", password.Trim()},
+                {"playerUsername", username.Trim()}
             }
         };
         ws.Send(action.ToJson());

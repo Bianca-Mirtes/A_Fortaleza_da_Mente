@@ -25,8 +25,8 @@ public class LobbyController : MonoBehaviour
         {
             return;
         }
-
         NetworkController.Instance.CreateRoom(roomName.textComponent.text);
+        roomName.text = string.Empty;
     }
 
     public void UpdateLabels(string player1, string player2)
@@ -37,10 +37,15 @@ public class LobbyController : MonoBehaviour
 
     public void ChangeStateCanvas(int child)
     {
-        roomCanvas.transform.GetChild(child).GetComponent<TMP_Text>().text = NetworkController.Instance.player.username;
+        ChangeLabel(child, NetworkController.Instance.player.username);
         chatCanvas.SetActive(false);
         roomCanvas.SetActive(true);
         roomSystemCanvas.SetActive(false);
+    }
+
+    public void ChangeLabel(int child, string name)
+    {
+        roomCanvas.transform.GetChild(child).GetComponent<TMP_Text>().text = name;
     }
 
     public void JoinRoom(TMP_InputField roomName)
@@ -51,20 +56,7 @@ public class LobbyController : MonoBehaviour
             return;
         }
         NetworkController.Instance.JoinRoom(roomName.textComponent.text);
-    }
-
-    public void FeedbackRoom(string feedback, string type)
-    {
-        if(type == "C")
-        {
-            TMP_Text feedbackRoom = roomSystemCanvas.transform.GetChild(2).GetComponent<TMP_Text>();
-            feedbackRoom.text = feedback;
-        }
-        else
-        {
-            TMP_Text feedbackRoom = roomSystemCanvas.transform.GetChild(2).GetComponent<TMP_Text>();
-            feedbackRoom.text = feedback;
-        }
+        roomName.text = string.Empty;
     }
 
     public void ExitRoom()

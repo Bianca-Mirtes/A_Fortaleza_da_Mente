@@ -7,18 +7,18 @@ using UnityEngine;
 public class ChatManager : MonoBehaviour
 {
     private TMP_InputField inputText;
-    private TMP_Text boxText;
+    //private TMP_Text boxText;
 
-    public static event Action<string> OnMessage;
+    //public static event Action<string> OnMessage;
    
     // Start is called before the first frame update
     void Start()
     {
-        inputText = transform.GetChild(2).GetComponent<TMP_InputField>();
-        boxText = transform.GetChild(1).GetComponent<TMP_Text>();
+        inputText = transform.GetChild(1).GetComponent<TMP_InputField>();
+        //boxText = GameObject.Find("TextBoxChat").GetComponent<TextMeshProUGUI>();
     }
 
-    private void Awake()
+    /*private void Awake()
     {
         OnMessage += AddNewMessage;
     }
@@ -30,7 +30,7 @@ public class ChatManager : MonoBehaviour
     public void AddNewMessage (string message)
     {
         boxText.text += message;
-    }
+    }*/
 
     public void Send(TMP_InputField message)
     {
@@ -43,8 +43,8 @@ public class ChatManager : MonoBehaviour
         NetworkController.Instance.SendChatMessage($"[{NetworkController.Instance.player.username}]: {message}");
     }
 
-    public void EventSendMessage(string message)
+    /*public void EventSendMessage(string message)
     {
         OnMessage?.Invoke($"\n{message}");
-    }
+    }*/
 }
