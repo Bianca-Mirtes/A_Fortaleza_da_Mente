@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class Skill
 {
@@ -68,6 +69,10 @@ public class PlayerSkills
 
 public class PlayerController : MonoBehaviour   
 {
+    //PUBLIC
+    public int maxHealth;
+    
+
     //PRIVATE
     private Animator animator; // Character Animator
     private float speed = 3f; // Character Speed
@@ -75,10 +80,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb; // Character Rigidbody2D
     private Transform transform; // Character Transform
     private string id;
+    private Image healthBar;
     private string email { get; set; }
     private string password { get; set; }
     private bool isOpen = false;
     private int aux = -1;
+    private int health;
+    
 
 
     NetworkController nm;
@@ -100,9 +108,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator =gameObject.GetComponent<Animator>();
         transform = gameObject.GetComponent<Transform>();
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
 
         playerSkills = new PlayerSkills();
     }
@@ -221,5 +231,20 @@ public class PlayerController : MonoBehaviour
                 GameObject.Find("FalseWall").GetComponent<TilemapRenderer>().sortingOrder = 5;
             }
         }
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        health -= damage;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        if(health <= 0)
+        {
+            animator.SetBool("isAlive", false);
+            health = 0;
+        }
+        healthBar.fillAmount = ((float)health) / ((float)maxHealth);
     }
 }

@@ -41,6 +41,8 @@ public class NetworkController : MonoBehaviour
     //protected string playerID { get; set; }
     public Player player = new Player();
 
+    private string roomNameWs = string.Empty;
+
     private bool isConnected = false;
     public bool isCreator { get; set; }
 
@@ -151,13 +153,13 @@ public class NetworkController : MonoBehaviour
                     messageChat.Enqueue(response.parameters["message"]);
                     break;
                 case "UserAlreadyExistWithThisEmail":
-                    feedback.text = "Usu·rio j· possui registro com esse email!";
+                    feedback.text = "Usu√°rio j√° possui registro com esse email!";
                     break;
                 case "UserAlreadyExistWithThisUsername":
-                    feedback.text = "Usu·rio j· possui registro com esse username!";
+                    feedback.text = "Usu√°rio j√° possui registro com esse username!";
                     break;
                 case "RegisterSucessful":
-                    feedback.text = "Usu·rio registrado com sucesso!";
+                    feedback.text = "Usu√°rio registrado com sucesso!";
                     break;
                 case "LoginSucessful":
                     feedback.text = "Login realizado com sucesso!";
@@ -173,23 +175,29 @@ public class NetworkController : MonoBehaviour
                     feedback.text = "Username Incorreto";
                     break;
                 case "LoginFail_UserNotRegistered":
-                    feedback.text = "Usu·rio n„o possui registro!";
+                    feedback.text = "Usu√°rio n√£o possui registro!";
                     break;
                 case "RoomDontExist":
 
-                    FindObjectOfType<LobbyController>().FeedbackRoom("N„o existe uma sala com esse nome!", "J");
+                    FindObjectOfType<LobbyController>().FeedbackRoom("NÔøΩo existe uma sala com esse nome!", "J");
                     break;
                 case "RoomCreated":
                     FindObjectOfType<LobbyController>().FeedbackRoom("Sala criada com sucesso!", "C");
+                    roomNameWs = response.parameters["roomName"];
+                    FindObjectOfType<LobbyController>().ChangeStateCanvas(4);
                     break;
                 case "RoomComplete":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("A sala est· cheia! Partida em andamento!", "J");
+                    FindObjectOfType<LobbyController>().FeedbackRoom("A sala est√° cheia! Partida em andamento!", "J");
                     break;
                 case "RoomAlreadyExist":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("J· existe uma sala com esse nome!", "C");
+                    FindObjectOfType<LobbyController>().FeedbackRoom("J√° existe uma sala com esse nome!", "C");
                     break;
                 case "JoinedInRoom":
-                    FindObjectOfType<LobbyController>().FeedbackRoom("Sala disponÌvel!", "J");
+                    FindObjectOfType<LobbyController>().FeedbackRoom("Sala dispon√≠vel!", "J");
+                    FindObjectOfType<LobbyController>().ChangeStateCanvas(5);
+                    break;
+                case "ExitRoomSucessful":
+                    FindObjectOfType<LobbyController>().UpdateLabels(response.parameters["player1Name"], response.parameters["player2Name"]);
                     break;
                 default:
                     break;
@@ -240,6 +248,20 @@ public class NetworkController : MonoBehaviour
     private void LoadLobby()
     {
         FindObjectOfType<GameController>().NextScene(1);
+    }
+
+    public void ExitRoom()
+    {
+        Action action = new Action
+        {
+            type = "ExitRoom",
+            actor = player.id,
+            parameters = new Dictionary<string, string>() {
+                {"roomName", roomNameWs},
+                {"playerName", player.username}
+            }
+        };
+        ws.Send(action.ToJson());
     }
 
     public void SendChatMessage(string message)
